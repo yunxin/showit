@@ -2,8 +2,12 @@ var express = require('express');
 
 var app = express.createServer(express.logger());
 
-app.get('/', function(request, response) {
-  response.send('Hello World!');
+var $ = require('jquery');
+    
+$("<h1>test passes</h1>").appendTo("body");
+
+app.get('*', function(request, response) {
+  response.send($("body").html());
 });
 
 var port = process.env.PORT || 5000;
