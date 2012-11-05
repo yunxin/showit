@@ -16,54 +16,54 @@ app.get('*', function(appRequest, appResponse) {
 
             var key = appRequest.path.substring(1).toLowerCase();
 
-            var sections = ['Summary', 'Professional Experience','Education', 'Technical Skills'];
-            if ('Jobs'.toLowerCase().indexOf(key) != -1) {
-                key = sections[1].toLocaleLowerCase();
-            }
-
-            var filtered = sections.filter(function (x) {
-                return x.toLocaleLowerCase().indexOf(key) != -1;
-            });
-
-            if (filtered.length == 0)
-            {
-                removeAll();
-            }
-            else{
-                // If there are multiple matches, we select the first one.
-                var match = sections.indexOf(filtered[0]);
-
-                if (match > 0) {
-                    removeBefore(match);
+            if (key.length != 0) {
+                var sections = ['Summary', 'Professional Experience', 'Education', 'Technical Skills'];
+                if ('Jobs'.toLowerCase().indexOf(key) != -1) {
+                    key = sections[1].toLocaleLowerCase();
                 }
 
-                if (match < sections.length -1) {
-                    removeAfter(match + 1);
+                var filtered = sections.filter(function (x) {
+                    return x.toLocaleLowerCase().indexOf(key) != -1;
+                });
+
+                if (filtered.length == 0) {
+                    removeAll();
+                }
+                else {
+                    // If there are multiple matches, we select the first one.
+                    var match = sections.indexOf(filtered[0]);
+
+                    if (match > 0) {
+                        removeBefore(match);
+                    }
+
+                    if (match < sections.length - 1) {
+                        removeAfter(match + 1);
+                    }
+                }
+                function getSpanParent(text) {
+                    var selector = "span:contains('" + text + "')";
+                    return $(selector).parent();
+                }
+
+                function removeBefore(exclusive) {
+                    var removeStart = getSpanParent(sections[0]).prev();
+                    var removeEnd = getSpanParent(sections[exclusive]);
+                    removeStart.nextUntil(removeEnd).remove();
+                }
+
+                function removeAfter(inclusive) {
+                    var removeStart = getSpanParent(sections[inclusive]).prev();
+                    removeStart.nextUntil().remove();
+                }
+
+                function removeAll() {
+                    var removeStart = getSpanParent(sections[0]).prev();
+                    removeStart.nextUntil().remove();
                 }
             }
 
             appResponse.send($('html').html());
-
-            function getSpanParent(text) {
-                var selector = "span:contains('" + text + "')";
-                return $(selector).parent();
-            }
-
-            function removeBefore(exclusive) {
-                var removeStart = getSpanParent(sections[0]).prev();
-                var removeEnd = getSpanParent(sections[exclusive]);
-                removeStart.nextUntil(removeEnd).remove();
-            }
-
-            function removeAfter(inclusive) {
-                var removeStart = getSpanParent(sections[inclusive]).prev();
-                removeStart.nextUntil().remove();
-            }
-
-            function removeAll() {
-                var removeStart = getSpanParent(sections[0]).prev();
-                removeStart.nextUntil().remove();
-            }
         });
     }
   })
