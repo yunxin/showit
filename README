@@ -1,9 +1,0 @@
-Notes:
-
-1. Surprises:
-
-A. Works on heroku without declaring dependency on jquery in package.json.
-
-2. Pending work:
-
-A. Evaluate perf overhead using regular expression, i.e. '*', with express router, i.e. get('*', ...).
