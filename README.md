@@ -1,4 +1,4 @@
-Overview
+Overview:
 
 The resume is stored with Google Docs. The web server retrieves it in html format using Google's HTTP API. It is then loaded into jsdom. The URL path of a request to the web server is used to select the section within the resume to return. If the path is empty, the full resume will be returned.
 
@@ -8,7 +8,7 @@ node.js + jsdom + jquery are selected for simplicity.
 
 A benefit of using Google Docs is that the resume can be edited easily without any need to change the web server unless the basic structure of html or section names change.
 
-Tests
+Tests:
 
 Return full resume
 
@@ -42,7 +42,7 @@ Return name only
 
 http://peaceful-sands-8861.herokuapp.com/non-existent
 
-Notes
+Notes:
 
 Works on heroku without declaring dependency on jquery etc in package.json.
 
